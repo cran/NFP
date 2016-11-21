@@ -1,4 +1,4 @@
-827864c70ad18b1ba75e65c4761e3ef3 *DESCRIPTION
+4887b4217f8181abfa5c8bf231f31bc2 *DESCRIPTION
 bbad71f1338780affeb72aae55636a96 *NAMESPACE
 a1ee8ba37c800dfa1c9c39e39ccce82b *R/NFP-class.R
 cffc1456fe03c01cfae8430b383d45bf *R/NFP.R
@@ -10,13 +10,13 @@ d906af090531112a1d99380706226ed3 *R/install_data_package.R
 ce432aac5524445ca8eaaa7c372b0909 *R/load_KEGG_refnet.R
 09d891d22d2b6d2365953fb4ac3e458f *R/plot_NFPlist.R
 23f1da848cd29958cbd555a9cb197d59 *R/zzz.R
-97c3ac0135411399de9a4d75d16ddd12 *README.md
-168694f1b11ce6cf6f29c60e06c59476 *build/vignette.rds
+4c83fea028bc8bdeaf4e8c9d31b7a171 *README.md
+1969d6d57e6e9ea3d800b8509c395456 *build/vignette.rds
 7738dfcf64c6adc845f33aca5199fc6f *data/datalist
 763961666a4678b58c5fa7a202302476 *data/kegg_refnet.rda
-55a7b9f0386edb74e2c70263785eb7e6 *inst/doc/NFP.R
-32bb29873afe214154b047dd1e0c3d98 *inst/doc/NFP.Rnw
-ee7327d0379c454836aa4ab6ae11ddc5 *inst/doc/NFP.pdf
+4022945c8e1d82b6d87434db374e1c7c *inst/doc/NFP.R
+40a97412150dc84fff1f4b6b054ed0c5 *inst/doc/NFP.Rnw
+05e6be7cda2427874b0437d12bc75957 *inst/doc/NFP.pdf
 72f5fe9d7fce7a90bbf0dc03274383ef *inst/extdata/humanPathway.txt
 97976e1e26c327248ceb9491f929a6bd *inst/extdata/signalPathway.txt
 f6dd41008f499372742a55637c055ce6 *man/NFP-class.Rd
@@ -40,5 +40,5 @@ c9b9c5a077d186f3d08fb11994f6746a *man/subnet-methods.Rd
 32013beca715d3f345890ad3168e9131 *tests/testthat.R
 df9fccc9f4d54d33146c47554d12c7d3 *tests/testthat/test-NFP.R
 a0546b4f204683d9ea10cddd4efd0cb9 *tests/testthat/test-NFPRefnet.R
-cd28663d4d68ace2eface0be3f79aa86 *vignettes/NFP.Rnw
+40a97412150dc84fff1f4b6b054ed0c5 *vignettes/NFP.Rnw
 8cfd14921b327753abf71f656fac431a *vignettes/nfp_plot.png

@@ -12,22 +12,29 @@ opts_chunk$set(
 options(replace.assign=TRUE,width=80)
 
 ## ----install-pkg, eval=FALSE--------------------------------------------------
-#  ## install release version of mmnet
+#  ## install release version of NFP
 #  source("http://bioconductor.org/biocLite.R")
 #  biocLite("NFP")
-#  
-#  ##install the latest development version
-#  useDevel()
-#  biocLite("NFP")
+
+## ----install-pkg2, eval=FALSE-------------------------------------------------
+#  ## install release version of NFP
+#  source("http://bioconductor.org/biocLite.R")
+#  biocLite(c("graph","KEGGgraph"))
+#  install.packages("NFP")
 
 ## ----install-pkg-github, eval=FALSE-------------------------------------------
-#  ## install NFP from github
+#  ## install NFP from github, require biocondutor dependencies package pre-installed
 #  if (!require(devtools))
 #    install.packages("devtools")
 #  devtools::install_github("yiluheihei/NFP")
 
 ## ----load-pkg,eval=TRUE, include=FALSE----------------------------------------
 library(NFP)
+
+## ----data_package,eval=FALSE--------------------------------------------------
+#  if (!require("NFPdata")) {
+#      install_data_package()
+#  }
 
 ## ----load_kegg_refnet, eval=TRUE, echo=TRUE-----------------------------------
 ## donot run, retrive pathway maps from KEGG database may take several minutes,
@@ -71,24 +78,24 @@ show(customized_refnet)
 group(customized_refnet)
 subnet(customized_refnet, 'test group', 1)
 
-## ----calc-NFP, eval=TRUE, echo=TRUE-------------------------------------------
-## set g as the query network
-query_net <- g
-## a subset of kegg_refnet, select the head five networks of group 1, 2
-group_names <- group(kegg_refnet)$name
-sample_NFPRefnet <- subnet(kegg_refnet, group_names[1:2],list(1:5,1:5))
+## ----calc-NFP, eval=FALSE, echo=TRUE------------------------------------------
+#  ## set g as the query network
+#  query_net <- g
+#  ## a subset of kegg_refnet, select the head five networks of group 1, 2
+#  group_names <- group(kegg_refnet)$name
+#  sample_NFPRefnet <- subnet(kegg_refnet, group_names[1:2],list(1:5,1:5))
+#  
+#  ## In order to save calculating time, we take nperm = 10
+#  NFP_score <- lapply(query_net, calc_sim_score,NFPnet = sample_NFPRefnet,
+#    nperm = 10)
+#  
+#  ## methods of NFP class
+#  show(NFP_score[[1]])
+#  randomized_score  <- perm_score(NFP_score[[1]])
+#  cluster <- cluster_info(NFP_score[[1]])
 
-## In order to save calculating time, we take nperm = 10
-NFP_score <- lapply(query_net, calc_sim_score,NFPnet = sample_NFPRefnet,
-  nperm = 10)
-
-## methods of NFP class
-show(NFP_score[[1]])
-randomized_score  <- perm_score(NFP_score[[1]])
-cluster <- cluster_info(NFP_score[[1]])
-
-## ----plot-nfp,echo=TRUE,eval=TRUE,fig=TRUE, fig.align='center',fig.cap='Plot a NFP object',dev='pdf',fig.show='hold',out.width='.8\\linewidth', out.height='.7\\linewidth'----
-plot(NFP_score[[1]])
+## ----plot-nfp,echo=TRUE,eval=FALSE,fig.cap='Plot a NFP object',dev='pdf',fig.show='hold',out.width='.8\\linewidth', out.height='.7\\linewidth'----
+#  plot_NFP(NFP_score[[1]])
 
 ## ----echo=FALSE---------------------------------------------------------------
 sessionInfo()
