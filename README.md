@@ -2,27 +2,28 @@
 
 [![Travis-CI Build Status](https://travis-ci.org/yiluheihei/NFP.svg?branch=master)](https://travis-ci.org/yiluheihei/NFP)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/NFP)](https://cran.r-project.org/package=NFP)
+[![Coverage Status](https://img.shields.io/codecov/c/github/yiluheihei/NFP/master.svg)](https://codecov.io/github/yiluheihei/NFP?branch=master)
 
 This package implements the network fingerprint framework. A biomedical network is characterized as a spectrum-like vector called “network fingerprint”, which contains similarities to basic networks. This knowledge-based multidimensional characterization provides a more intuitive way to decipher molecular networks, especially for large-scale network comparisons and clustering analyses
 
 **Prerequisites**
 
-**NFP** is free available on [CRAN](https://cran.r-project.org).  To install **NFP**, please note especially two depencies of **NFP**, **graph** and **KEGGgraph** are only available from [Bioconductor](www.bioconductor.org). Appanrantly, function `install.packages` can not insall Biocondutor packages. There is a function `biocLite`, a wrapper around `install.packages`
+**NFP** is free available on [CRAN](https://cran.r-project.org).  To install **NFP**, please note especially two depencies of **NFP**, **graph** and **KEGGgraph** are only available from [Bioconductor](https://www.bioconductor.org). Appanrantly, function `install.packages` can not insall Biocondutor packages. There is a function `install`, a wrapper around `install.packages`
 provided by Bioconductor, can be used to install both CRAN and Bioconductor
-packages simply. More details on `biocLite` is available from
-https://www.bioconductor.org/install/#why-biocLite. Thus, users can install NFP
-install the latest released version using `biocLite` directly:
+packages simply. Thus, users can install NFP
+install the latest released version directly as flowing:
 
 
 ```R
-source("http://bioconductor.org/biocLite.R")
-biocLite("NFP")
+if (!requireNamespace("BiocManager"))
+    install.packages("BiocManager")
+BiocManager::install("NFP")
 ```
 
 or install the  Bioconductor dependencies package first:
 
 ```R 
-biocLite(c("graph","KEGGgraph"))
+BiocManager::install(c("graph","KEGGgraph"))
 install.packages("NFP")
 ```
 
@@ -43,7 +44,7 @@ After installation, you can load **NFP** into current workspace by typing or pas
 library("NFP")
  ```
 
- Moreover, gene similarity data used in our {\it NFP} package is stored in a external data repository [NFPdata](https://github.com/yiluheihei/datarepo) for the large size (about 16 MB). More details on how to construct External Data Repositories using the Additional\_repositories field see The Coatless Professor [blog post](http://thecoatlessprofessor.com/programming/r-data-packages-in-external-data-repositories-using-the-additional\_repositories-field/). Thus, users must install the {\it NFPdata} before the networkfinger print analyis as following code.
+ Moreover, gene similarity data used in our **NFP** package is stored in a external data repository [NFPdata](https://github.com/yiluheihei/datarepo) for the large size (about 16 MB). More details on how to construct External Data Repositories using the Additional\_repositories field see The Coatless Professor [blog post](http://thecoatlessprofessor.com/programming/r-data-packages-in-external-data-repositories-using-the-additional\_repositories-field/). Thus, users must install the **NFPdata** before the networkfinger print analyis as following code.
 
 ```R
 if (!require("NFPdata")) {

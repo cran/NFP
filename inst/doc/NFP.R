@@ -1,42 +1,42 @@
-## ----style, eval=TRUE, echo=FALSE, results='asis'---------------------------------------
-BiocStyle::latex()
+## ---- include = FALSE----------------------------------------------------
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center", 
+  fig.show = "asis",
+  eval = TRUE,
+  tidy.opts = list(blank = FALSE, width.cutoff = 60),
+  tidy = TRUE,
+  message = FALSE,
+  warning = FALSE
+)
 
-## ----setup, include=FALSE, cache=FALSE, eval = TRUE, echo = FALSE-------------
-library(knitr)
-opts_chunk$set(
-               fig.align='center', fig.show='asis',
-               eval = TRUE,
-               tidy = FALSE,
-               message = FALSE,
-               warning = FALSE)
-options(replace.assign=TRUE,width=80)
-
-## ----install-pkg, eval=FALSE--------------------------------------------------
+## ----install-pkg, eval=FALSE---------------------------------------------
 #  ## install release version of NFP
 #  source("http://bioconductor.org/biocLite.R")
 #  biocLite("NFP")
 
-## ----install-pkg2, eval=FALSE-------------------------------------------------
+## ----nstall-pkg2, eval=FALSE---------------------------------------------
 #  ## install release version of NFP
 #  source("http://bioconductor.org/biocLite.R")
 #  biocLite(c("graph","KEGGgraph"))
 #  install.packages("NFP")
 
-## ----install-pkg-github, eval=FALSE-------------------------------------------
+## ----install-pkg-github, eval=FALSE--------------------------------------
 #  ## install NFP from github, require biocondutor dependencies package pre-installed
 #  if (!require(devtools))
 #    install.packages("devtools")
 #  devtools::install_github("yiluheihei/NFP")
 
-## ----load-pkg,eval=TRUE, include=FALSE----------------------------------------
+## ----load-pkg,eval=TRUE, include=FALSE-----------------------------------
 library(NFP)
 
-## ----data_package,eval=FALSE--------------------------------------------------
+## ----eval=FALSE----------------------------------------------------------
 #  if (!require("NFPdata")) {
 #      install_data_package()
 #  }
 
-## ----load_kegg_refnet, eval=TRUE, echo=TRUE-----------------------------------
+## ----eval=TRUE, echo=TRUE------------------------------------------------
 ## donot run, retrive pathway maps from KEGG database may take several minutes,
 ## we have pre-stored this data in our package
 ## kegg_refnet <- load_KEGG_refnet(organism = 'hsa')
@@ -45,7 +45,7 @@ data(kegg_refnet)
 # show the kegg reference networks
 show(kegg_refnet)
 
-## ----keggrefnet-methods,echo=TRUE,eval=TRUE-----------------------------------
+## ----keggrefnet-methods,echo=TRUE,eval=TRUE------------------------------
 ## group information of kegg reference networks
 refnet_group <- group(kegg_refnet)
 show(refnet_group)
@@ -55,7 +55,7 @@ selected_group <- refnet_group$name[c(1,2)]
 NFPnet <- subnet(kegg_refnet,selected_group)
 NFPnet
 
-## ----reactome-map-------------------------------------------------------------
+## ----reactome-map--------------------------------------------------------
 ## Reactome human pathway maps
 require(graphite)
 human_pathway <- pathways("hsapiens", "kegg")
@@ -65,7 +65,7 @@ show(p)
 g <- lapply(p, pathwayGraph)
 show(g)
 
-## ----customize-refnet,echo=TRUE, eval=TRUE------------------------------------
+## ----customize-refnet,echo=TRUE, eval=TRUE-------------------------------
 ## here, just take the above two reactome pathway maps as NFP basic reference
 ## networks as example
 g_names <- names(human_pathway)[1:2]
@@ -78,7 +78,7 @@ show(customized_refnet)
 group(customized_refnet)
 subnet(customized_refnet, 'test group', 1)
 
-## ----calc-NFP, eval=FALSE, echo=TRUE------------------------------------------
+## ----calc-NFP, eval=FALSE, echo=TRUE-------------------------------------
 #  ## set g as the query network
 #  query_net <- g
 #  ## a subset of kegg_refnet, select the head five networks of group 1, 2
@@ -97,11 +97,9 @@ subnet(customized_refnet, 'test group', 1)
 ## ----plot-nfp,echo=TRUE,eval=FALSE,fig.cap='Plot a NFP object',dev='pdf',fig.show='hold',out.width='.8\\linewidth', out.height='.7\\linewidth'----
 #  plot_NFP(NFP_score[[1]])
 
-## ----echo=FALSE---------------------------------------------------------------
-sessionInfo()
+## ------------------------------------------------------------------------
+knitr::include_graphics("nfp_plot.png")
 
-## ----closeConnetions----------------------------------------------------------
-allCon <- showConnections()
-socketCon <- as.integer(rownames(allCon)[allCon[, "class"] == "sockconn"])
-sapply(socketCon, function(ii) close.connection(getConnection(ii)) )
+## ----echo=FALSE----------------------------------------------------------
+sessionInfo()
 
