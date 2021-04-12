@@ -1,44 +1,55 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 
 
 <title>Network Fingerprint, a knowledge based characterization of biomedical networks in R</title>
 
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -47,9 +58,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -106,189 +117,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<style type="text/css">body {
-background-color: #fff;
-margin: 1em auto;
-max-width: 700px;
-overflow: visible;
-padding-left: 2em;
-padding-right: 2em;
-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-font-size: 14px;
-line-height: 1.35;
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
 }
-#header {
-text-align: center;
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-#TOC {
-clear: both;
-margin: 0 0 10px 10px;
-padding: 4px;
-width: 400px;
-border: 1px solid #CCCCCC;
-border-radius: 5px;
-background-color: #f6f6f6;
-font-size: 13px;
-line-height: 1.3;
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-#TOC .toctitle {
-font-weight: bold;
-font-size: 15px;
-margin-left: 5px;
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
 }
-#TOC ul {
-padding-left: 40px;
-margin-left: -1.5em;
-margin-top: 5px;
-margin-bottom: 5px;
+div.csl-indent {
+  margin-left: 2em;
 }
-#TOC ul ul {
-margin-left: -2em;
-}
-#TOC li {
-line-height: 16px;
-}
-table {
-margin: 1em auto;
-border-width: 1px;
-border-color: #DDDDDD;
-border-style: outset;
-border-collapse: collapse;
-}
-table th {
-border-width: 2px;
-padding: 5px;
-border-style: inset;
-}
-table td {
-border-width: 1px;
-border-style: inset;
-line-height: 18px;
-padding: 5px 5px;
-}
-table, table th, table td {
-border-left-style: none;
-border-right-style: none;
-}
-table thead, table tr.even {
-background-color: #f7f7f7;
-}
-p {
-margin: 0.5em 0;
-}
-blockquote {
-background-color: #f6f6f6;
-padding: 0.25em 0.75em;
-}
-hr {
-border-style: solid;
-border: none;
-border-top: 1px solid #777;
-margin: 28px 0;
-}
-dl {
-margin-left: 0;
-}
-dl dd {
-margin-bottom: 13px;
-margin-left: 13px;
-}
-dl dt {
-font-weight: bold;
-}
-ul {
-margin-top: 0;
-}
-ul li {
-list-style: circle outside;
-}
-ul ul {
-margin-bottom: 0;
-}
-pre, code {
-background-color: #f7f7f7;
-border-radius: 3px;
-color: #333;
-white-space: pre-wrap; 
-}
-pre {
-border-radius: 3px;
-margin: 5px 0px 10px 0px;
-padding: 10px;
-}
-pre:not([class]) {
-background-color: #f7f7f7;
-}
-code {
-font-family: Consolas, Monaco, 'Courier New', monospace;
-font-size: 85%;
-}
-p > code, li > code {
-padding: 2px 0px;
-}
-div.figure {
-text-align: center;
-}
-img {
-background-color: #FFFFFF;
-padding: 2px;
-border: 1px solid #DDDDDD;
-border-radius: 3px;
-border: 1px solid #CCCCCC;
-margin: 0 5px;
-}
-h1 {
-margin-top: 0;
-font-size: 35px;
-line-height: 40px;
-}
-h2 {
-border-bottom: 4px solid #f7f7f7;
-padding-top: 10px;
-padding-bottom: 2px;
-font-size: 145%;
-}
-h3 {
-border-bottom: 2px solid #f7f7f7;
-padding-top: 10px;
-font-size: 120%;
-}
-h4 {
-border-bottom: 1px solid #f7f7f7;
-margin-left: 8px;
-font-size: 105%;
-}
-h5, h6 {
-border-bottom: 1px solid #ccc;
-font-size: 105%;
-}
-a {
-color: #0033dd;
-text-decoration: none;
-}
-a:hover {
-color: #6666ff; }
-a:visited {
-color: #800080; }
-a:visited:hover {
-color: #BB00BB; }
-a[href^="http:"] {
-text-decoration: underline; }
-a[href^="https:"] {
-text-decoration: underline; }
-
-code > span.kw { color: #555; font-weight: bold; } 
-code > span.dt { color: #902000; } 
-code > span.dv { color: #40a070; } 
-code > span.bn { color: #d14; } 
-code > span.fl { color: #d14; } 
-code > span.ch { color: #d14; } 
-code > span.st { color: #d14; } 
-code > span.co { color: #888888; font-style: italic; } 
-code > span.ot { color: #007020; } 
-code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
 
 
 
@@ -305,10 +157,12 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <div id="TOC">
 <ul>
-<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
 <li><a href="#installation">Installation</a></li>
 </ul></li>
-<li><a href="#analysis-pipeline-from-basic-reference-network-generation-to-network">Analysis Pipeline: from Basic Reference Network Generation to Network</a><ul>
+<li><a href="#analysis-pipeline-from-basic-reference-network-generation-to-network">Analysis Pipeline: from Basic Reference Network Generation to Network</a>
+<ul>
 <li><a href="#generating-well-studied-basic-reference-networks">Generating well-studied basic reference networks</a></li>
 <li><a href="#network-fingerprint-calculation">Network fingerprint calculation</a></li>
 <li><a href="#network-fingerprint-visualization">Network fingerprint visualization</a></li>
@@ -321,7 +175,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p>Recent network fingerprint method based on GO knowledge and propagation clustering mentioned in <span class="citation">(Cui et al. 2015)</span> provide a novel representation of network differentiation known as biological spectra, or Network Fingerprint. This method was used to describe the relationship between multiple disease networks and its related pathways, and to visually compare and parse different diseases by generating a fingerprint overlay. Thus, we achieve the function of complex network comparison based on network fingerprint on the open scientific computing platform <strong>R</strong>, and present <em>NFP</em> package for fingerprint-based network analyzing and comparison of systems. Driven by the research needs of customers, <em>NFP</em> provides a unified interface to three similarity clustering algorithms. In addition, <em>NFP</em> can also provide multiscale statistical analysis and visualization, access to the specific attributes of different disease networks.</p>
-<p>This manual is a brief introduction to structure, functions and usage of <em>NFP</em> package. The NFP package provides a set of functions to support knowledge-based network fingerprint (NFP) framework. A biomedical network is characterized as a spectrum-like vector called “network fingerprint”, which contains similarities to basic reference networks. This framework provides a more intuitive way to decipher molecular networks, especially for large-scale network comparisons and clustering analyses.</p>
+<p>This manual is a brief introduction to structure, functions and usage of <em>NFP</em> package. The NFP package provides a set of functions to support knowledge-based network fingerprint (NFP) framework. A biomedical network is characterized as a spectrum-like vector called “network fingerprint,” which contains similarities to basic reference networks. This framework provides a more intuitive way to decipher molecular networks, especially for large-scale network comparisons and clustering analyses.</p>
 <p>The three main features of <em>NFP</em>:</p>
 <ul>
 <li>Basic reference networks generation.</li>
@@ -330,25 +184,24 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </ul>
 <div id="installation" class="section level3">
 <h3>Installation</h3>
-<p><em>NFP</em> requires these packages: <em>magrittr</em>, <em>igraph</em>, <em>plyr</em>, <em>ggplot2</em>, <em>apcluster</em>, <em>dplyr</em>, <em>stringr</em>, <em>graph</em> and <em>KEGGgraph</em>. To install <em>NFP</em>, please note especially two depencies of <em>NFP</em>, <em>graph</em> and <em>KEGGgraph</em> are only available from <a href="http://bioconductor.org">Bioconductor</a>. Appanrantly, function <code>install.packages()</code>can not insall Biocondutor packages. There is a <code>biocLite()</code>, a wrapper around <code>install.packages()</code> provided by Bioconductor, can be used to install both CRAN and Bioconductor packages simply. More details on <code>biocLite()</code> is available from <a href="https://www.bioconductor.org/install/">https://www.bioconductor.org/install/</a>. Thus, users can install NFP install the latest released version using <code>biocLite()</code> directly:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">## install release version of NFP</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">source</span>(<span class="st">&quot;http://bioconductor.org/biocLite.R&quot;</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">biocLite</span>(<span class="st">&quot;NFP&quot;</span>)</a></code></pre></div>
+<p><em>NFP</em> requires these packages: <em>magrittr</em>, <em>igraph</em>, <em>plyr</em>, <em>ggplot2</em>, <em>apcluster</em>, <em>dplyr</em>, <em>stringr</em>, <em>graph</em> and <em>KEGGgraph</em>. To install <em>NFP</em>, please note especially two depencies of <em>NFP</em>, <em>graph</em> and <em>KEGGgraph</em> are only available from <a href="https://bioconductor.org">Bioconductor</a>. Appanrantly, function <code>install.packages()</code> can not insall Biocondutor packages. There is a <code>biocLite()</code>, a wrapper around <code>install.packages()</code> provided by Bioconductor, can be used to install both CRAN and Bioconductor packages simply. More details on <code>biocLite()</code> is available from <a href="https://www.bioconductor.org/install/">https://www.bioconductor.org/install/</a>. Thus, users can install NFP install the latest released version using <code>biocLite()</code> directly:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## install release version of NFP</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;NFP&quot;</span>)</span></code></pre></div>
 <p>or install the Bioconductor dependencies package first:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">## install release version of NFP</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">source</span>(<span class="st">&quot;http://bioconductor.org/biocLite.R&quot;</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">biocLite</span>(<span class="kw">c</span>(<span class="st">&quot;graph&quot;</span>, <span class="st">&quot;KEGGgraph&quot;</span>))</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">install.packages</span>(<span class="st">&quot;NFP&quot;</span>)</a></code></pre></div>
-<p>It also allows users to install the latest development version from github, which requires <em>devtools</em> package has been installed on your system or can be installed using <code>install.packages(&quot;devtools&quot;)</code>. Note that devtools sometimes needs some extra non-R software on your system – more specifically, an Rtools download for Windows or Xcode for OS X. There’s more information about devtools <a href="https://github.com/hadley/devtools">here</a>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">## install NFP from github, require biocondutor dependencies</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">## package pre-installed</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(devtools)) <span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;yiluheihei/NFP&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## install release version of NFP</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="fu">c</span>(<span class="st">&quot;graph&quot;</span>, <span class="st">&quot;KEGGgraph&quot;</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;NFP&quot;</span>)</span></code></pre></div>
+<p>It also allows users to install the latest development version from github, which requires <em>devtools</em> package has been installed on your system or can be installed using <code>install.packages(&quot;devtools&quot;)</code>. Note that devtools sometimes needs some extra non-R software on your system – more specifically, an Rtools download for Windows or Xcode for OS X. There’s more information about devtools <a href="https://github.com/r-lib/devtools">here</a>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## install NFP from github, require biocondutor dependencies</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="do">## package pre-installed</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(devtools)) <span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;yiluheihei/NFP&quot;</span>)</span></code></pre></div>
 <p>After installation, the *{NFP} is ready to load into the current workspace by the following codes to the current workspace by typing or pasting the following codes:</p>
-<p>Moreover, gene similarity data used in our <em>NFP</em> package is stored in a external data repository <em>NFPdata</em> <a href="https://github.com/yiluheihei/datarepo">https://github.com/yiluheihei/datarepo</a> for the large size (about 16 MB). More details on how to construct External Data Repositories using the <code>Additional_repositories</code> field see The Coatless Professor <a href="http://thecoatlessprofessor.com/programming/r-data-packages-in-external-data-repositories-using-the-additional_repositories-field/">blog post</a>. Thus, users must install the <em>NFPdata</em> before the networkfinger print analyis as following code.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">&quot;NFPdata&quot;</span>)) {</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="kw">install_data_package</span>()</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">}</a></code></pre></div>
+<p>Moreover, gene similarity data used in our <em>NFP</em> package is stored in a external data repository <em>NFPdata</em> <a href="https://github.com/yiluheihei/datarepo">https://github.com/yiluheihei/datarepo</a> for the large size (about 16 MB). More details on how to construct External Data Repositories using the <code>Additional_repositories</code> field see The Coatless Professor <a href="https://thecoatlessprofessor.com/programming/r-data-packages-in-external-data-repositories-using-the-additional_repositories-field/">blog post</a>. Thus, users must install the <em>NFPdata</em> before the networkfinger print analyis as following code.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;NFPdata&quot;</span>)) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install_data_package</span>()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 </div>
 <div id="analysis-pipeline-from-basic-reference-network-generation-to-network" class="section level2">
@@ -363,26 +216,26 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="generating-well-studied-basic-reference-networks" class="section level3">
 <h3>Generating well-studied basic reference networks</h3>
 <p>The basic idea of calculating the network fingerprint is to have the biomedical networks map to well-studied basic networks. KEGG PATHWAY is a collection of manually drawn pathway maps representing our knowledge on the molecular interaction and reaction networks. Since its first introduction in 1995, KEGG PATHWAY has been widely used as a reference knowledge base for understanding biological pathways and functions of cellular processes. The knowledge from KEGG has proven of great value by numerous work in a wide range of fields <span class="citation">(Kanehisa et al. 2007)</span>. So by default, we take KEGG pathways as basic reference networks in <em>NFP</em> by default.</p>
-<p>Function <code>load_KEGG_refnet()</code> can be used to retrieve the KEGG pathway maps with KEGG API <a href="http://www.kegg.jp/kegg/rest/keggapi.html">http://www.kegg.jp/kegg/rest/keggapi.html</a>. In KEGG pathways, only the pathways of the map are manual drawing, and to different organisms, the map reference helps the automatic generation of organism-specific pathway for each organism. The <code>organism</code> (e.g. <code>organsim =&quot;hsa&quot;</code>) parameter indicate the organism name of KEGG pathway maps.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co">## donot run, retrive pathway maps from KEGG database may take</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">## several minutes, we have pre-stored this data in our</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">## package kegg_refnet &lt;- load_KEGG_refnet(organism = 'hsa')</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw">data</span>(kegg_refnet)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># show the kegg reference networks</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw">show</span>(kegg_refnet)</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; Basic networks of organism hsa </span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; 134 basic networks; classification into 4 groups: </span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt;                                  group_name net_num</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; group1       Genetic Information Processing      22</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; group2 Environmental Information Processing      28</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt; group3                   Cellular Processes      15</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt; group4                   Organismal Systems      69</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt;                                                      net_name</span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt; group1             RNA polymerase - Homo sapiens (human), ...</span></a>
-<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt; group2           ABC transporters - Homo sapiens (human), ...</span></a>
-<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">#&gt; group3                Endocytosis - Homo sapiens (human), ...</span></a>
-<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">#&gt; group4 Hematopoietic cell lineage - Homo sapiens (human), ...</span></a></code></pre></div>
+<p>Function <code>load_KEGG_refnet()</code> can be used to retrieve the KEGG pathway maps with KEGG API <a href="https://www.kegg.jp/kegg/rest/keggapi.html">https://www.kegg.jp/kegg/rest/keggapi.html</a>. In KEGG pathways, only the pathways of the map are manual drawing, and to different organisms, the map reference helps the automatic generation of organism-specific pathway for each organism. The <code>organism</code> (e.g. <code>organsim =&quot;hsa&quot;</code>) parameter indicate the organism name of KEGG pathway maps.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## donot run, retrive pathway maps from KEGG database may take</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">## several minutes, we have pre-stored this data in our</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## package kegg_refnet &lt;- load_KEGG_refnet(organism = &#39;hsa&#39;)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(kegg_refnet)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># show the kegg reference networks</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(kegg_refnet)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Basic networks of organism hsa </span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 134 basic networks; classification into 4 groups: </span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                  group_name net_num</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group1       Genetic Information Processing      22</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group2 Environmental Information Processing      28</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group3                   Cellular Processes      15</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group4                   Organismal Systems      69</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                      net_name</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group1             RNA polymerase - Homo sapiens (human), ...</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group2           ABC transporters - Homo sapiens (human), ...</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group3                Endocytosis - Homo sapiens (human), ...</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group4 Hematopoietic cell lineage - Homo sapiens (human), ...</span></span></code></pre></div>
 <p>We defined a new S4 class <code>NFPrefnet</code> to store the <em>NFP</em> reference networks. <em>NFP</em> also provides five kinds of methods for this S4 class:</p>
 <ol style="list-style-type: decimal">
 <li><code>net()</code>: Exact the basic reference networks of <code>NFPRefnet</code>.</li>
@@ -391,86 +244,86 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <li><code>show()</code>: Display of <code>NFPRefnet</code>.</li>
 <li><code>name()</code>: Extract the names of reference networks.</li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">## group information of kegg reference networks</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">refnet_group &lt;-<span class="st"> </span><span class="kw">group</span>(kegg_refnet)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw">show</span>(refnet_group)</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; $name</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; [1] &quot;Genetic Information Processing&quot;      </span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; [2] &quot;Environmental Information Processing&quot;</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; [3] &quot;Cellular Processes&quot;                  </span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; [4] &quot;Organismal Systems&quot;                  </span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt; $num</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; [1] 4</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt; $size</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt;       Genetic Information Processing Environmental Information Processing </span></a>
-<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt;                                   22                                   28 </span></a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt;                   Cellular Processes                   Organismal Systems </span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt;                                   15                                   69</span></a>
-<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">## select goup 1 and 2, and subset this two groups</span></a>
-<a class="sourceLine" id="cb6-19" data-line-number="19">selected_group &lt;-<span class="st"> </span>refnet_group<span class="op">$</span>name[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)]</a>
-<a class="sourceLine" id="cb6-20" data-line-number="20">NFPnet &lt;-<span class="st"> </span><span class="kw">subnet</span>(kegg_refnet, selected_group)</a>
-<a class="sourceLine" id="cb6-21" data-line-number="21">NFPnet</a>
-<a class="sourceLine" id="cb6-22" data-line-number="22"><span class="co">#&gt; Basic networks of organism hsa </span></a>
-<a class="sourceLine" id="cb6-23" data-line-number="23"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-24" data-line-number="24"><span class="co">#&gt; 50 basic networks; classification into 2 groups: </span></a>
-<a class="sourceLine" id="cb6-25" data-line-number="25"><span class="co">#&gt;                                  group_name net_num</span></a>
-<a class="sourceLine" id="cb6-26" data-line-number="26"><span class="co">#&gt; group1       Genetic Information Processing      22</span></a>
-<a class="sourceLine" id="cb6-27" data-line-number="27"><span class="co">#&gt; group2 Environmental Information Processing      28</span></a>
-<a class="sourceLine" id="cb6-28" data-line-number="28"><span class="co">#&gt;                                            net_name</span></a>
-<a class="sourceLine" id="cb6-29" data-line-number="29"><span class="co">#&gt; group1   RNA polymerase - Homo sapiens (human), ...</span></a>
-<a class="sourceLine" id="cb6-30" data-line-number="30"><span class="co">#&gt; group2 ABC transporters - Homo sapiens (human), ...</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## group information of kegg reference networks</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>refnet_group <span class="ot">&lt;-</span> <span class="fu">group</span>(kegg_refnet)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(refnet_group)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $name</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Genetic Information Processing&quot;      </span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2] &quot;Environmental Information Processing&quot;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3] &quot;Cellular Processes&quot;                  </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4] &quot;Organismal Systems&quot;                  </span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $num</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 4</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $size</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       Genetic Information Processing Environmental Information Processing </span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                   22                                   28 </span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                   Cellular Processes                   Organismal Systems </span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                   15                                   69</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="do">## select goup 1 and 2, and subset this two groups</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>selected_group <span class="ot">&lt;-</span> refnet_group<span class="sc">$</span>name[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)]</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>NFPnet <span class="ot">&lt;-</span> <span class="fu">subnet</span>(kegg_refnet, selected_group)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>NFPnet</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Basic networks of organism hsa </span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 50 basic networks; classification into 2 groups: </span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                  group_name net_num</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group1       Genetic Information Processing      22</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group2 Environmental Information Processing      28</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                            net_name</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group1   RNA polymerase - Homo sapiens (human), ...</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group2 ABC transporters - Homo sapiens (human), ...</span></span></code></pre></div>
 <p>Detailed instructions for this five methods refer to package function help.</p>
 <p>Obviously users can also customize a NFPRefnet as a reference for computing network fingerprint. Users can refer to the documents of <code>NFPRefnet</code> about the composition details of this class. <em>graphite</em> <span class="citation">(Sales et al. 2012)</span> allow users to build <code>graphNEL</code> object from several pathway databases.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">## Reactome human pathway maps</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">require</span>(graphite)</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">human_pathway &lt;-<span class="st"> </span><span class="kw">pathways</span>(<span class="st">&quot;hsapiens&quot;</span>, <span class="st">&quot;kegg&quot;</span>)</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">## just choose first two pathway maps for testing</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">p &lt;-<span class="st"> </span>human_pathway[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw">show</span>(p)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt; KEGG pathways for hsapiens</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt; 2 entries, retrieved on 17-04-2019</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">g &lt;-<span class="st"> </span><span class="kw">lapply</span>(p, pathwayGraph)</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="kw">show</span>(g)</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt; $`Glycolysis / Gluconeogenesis`</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt; A graphNEL graph with directed edges</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt; Number of Nodes = 68 </span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; Number of Edges = 728 </span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt; $`Citrate cycle (TCA cycle)`</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; A graphNEL graph with directed edges</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt; Number of Nodes = 30 </span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt; Number of Edges = 196</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Reactome human pathway maps</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(graphite)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>human_pathway <span class="ot">&lt;-</span> <span class="fu">pathways</span>(<span class="st">&quot;hsapiens&quot;</span>, <span class="st">&quot;kegg&quot;</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## just choose first two pathway maps for testing</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> human_pathway[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(p)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; KEGG pathways for hsapiens</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 entries, retrieved on 13-10-2020</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">lapply</span>(p, pathwayGraph)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(g)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $`Glycolysis / Gluconeogenesis`</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A graphNEL graph with directed edges</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of Nodes = 67 </span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of Edges = 692 </span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $`Citrate cycle (TCA cycle)`</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A graphNEL graph with directed edges</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of Nodes = 30 </span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Number of Edges = 196</span></span></code></pre></div>
 <p>Then users can create their own customized  object as following:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co">## here, just take the above two reactome pathway maps as NFP</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">## basic reference networks as example</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">g_names &lt;-<span class="st"> </span><span class="kw">names</span>(human_pathway)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">## only one group and two reference networks</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">customized_refnet &lt;-<span class="st"> </span><span class="kw">new</span>(<span class="st">&quot;NFPRefnet&quot;</span>, <span class="dt">network =</span> <span class="kw">list</span>(g), <span class="dt">name =</span> <span class="kw">list</span>(g_names), </a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">    <span class="dt">group =</span> <span class="st">&quot;test group&quot;</span>, <span class="dt">organism =</span> <span class="st">&quot;hsa&quot;</span>)</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">## methods of NFPRefnet</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="kw">show</span>(customized_refnet)</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; Basic networks of organism hsa </span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; 2 basic networks; classification into 1 groups: </span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt;        group_name net_num                          net_name</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; group1 test group       2 Glycolysis / Gluconeogenesis, ...</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="kw">group</span>(customized_refnet)</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; $name</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; [1] &quot;test group&quot;</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; $num</span></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; [1] 1</span></a>
-<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt; $size</span></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; [1] 2</span></a>
-<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="kw">subnet</span>(customized_refnet, <span class="st">&quot;test group&quot;</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt; Basic networks of organism hsa </span></a>
-<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt; 1 basic networks; classification into 1 groups: </span></a>
-<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt;        group_name net_num                          net_name</span></a>
-<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt; group1 test group       1 Glycolysis / Gluconeogenesis, ...</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">## here, just take the above two reactome pathway maps as NFP</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="do">## basic reference networks as example</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>g_names <span class="ot">&lt;-</span> <span class="fu">names</span>(human_pathway)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">## only one group and two reference networks</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>customized_refnet <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;NFPRefnet&quot;</span>, <span class="at">network =</span> <span class="fu">list</span>(g), <span class="at">name =</span> <span class="fu">list</span>(g_names), </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="st">&quot;test group&quot;</span>, <span class="at">organism =</span> <span class="st">&quot;hsa&quot;</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">## methods of NFPRefnet</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(customized_refnet)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Basic networks of organism hsa </span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 basic networks; classification into 1 groups: </span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        group_name net_num                          net_name</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group1 test group       2 Glycolysis / Gluconeogenesis, ...</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">group</span>(customized_refnet)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $name</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;test group&quot;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $num</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $size</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="fu">subnet</span>(customized_refnet, <span class="st">&quot;test group&quot;</span>, <span class="dv">1</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Basic networks of organism hsa </span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 basic networks; classification into 1 groups: </span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        group_name net_num                          net_name</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; group1 test group       1 Glycolysis / Gluconeogenesis, ...</span></span></code></pre></div>
 </div>
 <div id="network-fingerprint-calculation" class="section level3">
 <h3>Network fingerprint calculation</h3>
@@ -481,39 +334,39 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <p>To not affect the results of standardization and improve the efficiency of fingerprint calculation, we set limit on the permutation time (the default is 100) of background network randomization in the standardization process. Users can also adjust randomization time of background network according to their own demands for the precision of network fingerprint.</p>
 <p><em>NFP</em> provides the <code>calc_sim_score()</code> function for calculating the similarity score between two networks. As the similarity score is subjected to the size of the network, we use the maslov’s method <span class="citation">(Maslov and Sneppen 2002)</span> to randomize a network while preserving the degree distribution. The <code>nperm</code> parameter is added to <code>calc_sim_score()</code> refers to the permutation times (the default is 100) of random network while calculating the similarity score mentioned above. We define a S4 class <code>NFP</code> in our package to store the calculation results of network fingerprints.</p>
 <p>Simply, we choose the two pathway maps <code>g</code> as a query network, and a subset networks of <code>kegg_refnet</code> as the reference networks. Then the NFP can be calculated as following:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co">## set g as the query network</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">query_net &lt;-<span class="st"> </span>g</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">## a subset of kegg_refnet, select the head five networks of</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">## group 1, 2</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">group_names &lt;-<span class="st"> </span><span class="kw">group</span>(kegg_refnet)<span class="op">$</span>name</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">sample_NFPRefnet &lt;-<span class="st"> </span><span class="kw">subnet</span>(kegg_refnet, group_names[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="kw">list</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, </a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">    <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>))</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">## In order to save calculating time, we take nperm = 10</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">NFP_score &lt;-<span class="st"> </span><span class="kw">lapply</span>(query_net, calc_sim_score, <span class="dt">NFPnet =</span> sample_NFPRefnet, </a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">    <span class="dt">nperm =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">## methods of NFP class</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="kw">show</span>(NFP_score[[<span class="dv">1</span>]])</a>
-<a class="sourceLine" id="cb9-13" data-line-number="13">randomized_score &lt;-<span class="st"> </span><span class="kw">perm_score</span>(NFP_score[[<span class="dv">1</span>]])</a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">cluster &lt;-<span class="st"> </span><span class="kw">cluster_info</span>(NFP_score[[<span class="dv">1</span>]])</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## set g as the query network</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>query_net <span class="ot">&lt;-</span> g</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">## a subset of kegg_refnet, select the head five networks of</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="do">## group 1, 2</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>group_names <span class="ot">&lt;-</span> <span class="fu">group</span>(kegg_refnet)<span class="sc">$</span>name</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>sample_NFPRefnet <span class="ot">&lt;-</span> <span class="fu">subnet</span>(kegg_refnet, group_names[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>))</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="do">## In order to save calculating time, we take nperm = 10</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>NFP_score <span class="ot">&lt;-</span> <span class="fu">lapply</span>(query_net, calc_sim_score, <span class="at">NFPnet =</span> sample_NFPRefnet, </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">nperm =</span> <span class="dv">10</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="do">## methods of NFP class</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(NFP_score[[<span class="dv">1</span>]])</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>randomized_score <span class="ot">&lt;-</span> <span class="fu">perm_score</span>(NFP_score[[<span class="dv">1</span>]])</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>cluster <span class="ot">&lt;-</span> <span class="fu">cluster_info</span>(NFP_score[[<span class="dv">1</span>]])</span></code></pre></div>
 </div>
 <div id="network-fingerprint-visualization" class="section level3">
 <h3>Network fingerprint visualization</h3>
 <p><em>NFP</em> provides the <code>plot_NFP()</code> function to visualize the network fingerprint of a single query network.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">plot_NFP</span>(NFP_score[[<span class="dv">1</span>]])</a></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&quot;nfp_plot.png&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_NFP</span>(NFP_score[[<span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">&quot;nfp_plot.png&quot;</span>)</span></code></pre></div>
 <p><img src="data:image/png;base64,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88472yWXXGJrrLGGaZuvvvrKTj31VFtzzTXthRdesKuuuspmzZpl66yzjh1zzDE2fPhwl/lzzz1nDz74oJ177rmJg91///324Ycf2vHHH28vvfSSPfHEE7bFFlvY1Vdfbd27d7c99tjDdtlll8T2vEAAgdwFOt1F2NbWZuedd56dffbZtmjRImttbW33c+edd+ZeKnJAAAEEKkDgkUcecYFUS0uLC3j+8Ic/2AknnGCvvfaaq/0///lPmzRpknu/ZMkS6927twuettpqK1u4cKELjJ5//nlbb731bNq0aW6fDz74wG677bZ2espvypQpbtnUqVPt/PPPtwMOOMA22WQTGzx4sAvsbr/99nb78AYBBHIT6HQL1rJly9w3rF133dX69OmT29HZGwEEEKhggd/97nd2yCGH2OWXX+4UdthhB1t33XXbidTW1trTTz9t1dXVbvmWW27pAqKbb77Zvf/1r39to0ePtpNPPrlDYNUuo6Q3+nKsgErHU1LeKsu+++6btBUvEUAgF4FOt2D17NnT9t9/f7vooots6dKluRybfRFAAIGKFZg/f7598skniSBHEOruGzVqVDuTsWPHJoIr7TN9+vR2+2jjiRMnJlq92u0c8KZHjx42fvz4xNrtttvOfXH+/PPPE8t4gQACuQl0ugVLh9M4AH3LuuKKK9yA9qqq/8Vp2267rZ155pm5lYq9EUAAgTIXmDdvnquhP3bKr26/fv38l+73gAEDEu8XLFjgXmuMVnLSzUUaruGneDzuv3S/m5ub270fNGiQ9erVK7Gsf//+7rW6IUkIIJAfgVABlgZfDhkyxCZMmGCpfwy+//3v56dk5IIAAgiUscDIkSOtrq7O3njjjcSd1xrI/tZbb7kWqXRVHzFihBuUrrFZW2+9dWKTxx57zDbYYAP3Xq1TqYHSp59+mthWL2bOnGkai7X66qu75f/6179cWTSAnoQAAvkR6HSApf+4b7/9tr333nu29tpr56cU5IIAAghUmEC3bt3s97//vZ100kmmFiYNVD/rrLMstfUpmUVjpTTo/ZZbbjGNxfp//+//ude6M9Afk6W7DjXG6sYbb3RjtR599FF76KGHbMMNN0zOys444wy74IILTMHXddddZwcddJAl90a025g3CCDQaYFOB1i6i0XfvBoaGjp9MHZAAAEEEPifgIIcBVQaVqE5BRXk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+TVrCug2znS4Y4891nbeeWf75JNPTHmfddZZ9qMf/ciampoy7RZqXbN396ueV+unO+64wxZ5041km1TW5Ams0+339ttv23777efm/PIDuXTb5XvZU0895T73lK8CrPvuuy8vh9Ackr/61a/s9ddftzfffNOeffZZO/TQQ10Q3BbifOelUAGZdPZ8BmRT9ouzbsFad911bdq0afbaa68lUNZZZ51277ViRSY/TPjwAgEEEAgrcIXXcjXLC36SR+DpdUNrm908a7YdOmxo1ln/7W9/cx/Yb731VqJV6YQTTrBtt93W1Fp0yCGHuLwavZsqPv74YxsxYoT5rU0t3vQg9fX11rt3b/voo49s6NChiXXaKd0+c+bMsenTp5ue9jFo0CC74YYb2n02zJgxw/p6rbL6WV6aO3eu6bm3miZIgaHKpjL95z//sTFjxriya72Snpmrz6lVV13V9BgipSVLlrjXX3zxhQ0fPtwFetpeAVyfPn2sf//+poBQ71dbbTW3j/+P6q38tP3KK69sCnR0g5eCIQWMa621VoebvRR0KWjVsZSW5+cfy/99+eWXe1PeffvRrLJ/z5vrTudtjTXWaFcPv36px/Pz0fxqCqZlUe3NnecnnRvto/z842jd/PnznbFazeTip08//dS5Kh9/e/98Lq9u/vlYffXVnZkeuhy11ji/nl3xO+sA68477+yK45MnAgggUNECM72g5hyvZSo1vbpwUbvgyl/f7AUZV3rBl1q0UtORI4fbGl4glJruuusuO+qooxLBldZrxvd77rknESypZUYtQmp5UivKBRdcYL/4xS/s1Vdftd/85jduQlQFIwpslJ9av4L2UeuYgpEDDjjAHnzwQdtggw3s6aefdsGCuv40g70+9LfeemubPHlyanHbvVcQtcUWW7gASEHWT3/6U9fSc9FFF7mA4Pe//70LEtXqpUe3KaBTMKVphVSXk046yT1t5I033rCf/exnrs5bbrmlzZ4927TslFNOcV1zCigXL17sWo9UtquvvtrOPvts0+PfXn75Zdt1113tjDPOcMsVpOj4qot6b9TiNGvWLDv44INN6xRYar8pU6Zk9GtX0TRvFFCqLCpbaj2OO+64tMfT9uq23G233Zy7zFRWdQefeOKJLthVwDNz5kzTBOJrrrmmqXfq5JNPdt3GakQ599xz3bWw9957uyBNAaYC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IIAAAgggUE4CBFjldDapCwIIIIAAAghEQoAAKxKngUIggAACCCCAQDkJEGCV09mkLggggAACCCAQCQECrEicBgqBAAIIIIAAAuUkUPQAa86cOfbYY4/Zhx9+mNFV6x9//HHT9iQEEEAAAQQQQCDKAkUNsN588007+OCD7aOPPrLjjjvO7rvvvrRWF110kZ133nmm7Q855BCbMWNG2u1YiAACCCCAAAIIREGgqDO5T5482c4880wbM2aM7bXXXnbooYfajjvuaN27d0/YTJ8+3Z577jm75557rKqqyu644w679dZb7cQTT0xswwsEEEAAAQQQQCBKAkULsFpaWmzmzJm2/vrrO4+VVlrJevXqZV988YWNHj06YTRt2jS3jYIrpY022sgefvjhxHq9ePfdd+2yyy5LLNt7771ts802S7zP9UW3bt2sX79+uWaTt/1ra2vbBaF5yzhERkE2dQ1NLrcVV1zR6jy/QqWo2MRiMauurs7rdROvX2KtHmSfPn0sFuJ61P+vHj16dOpUtHSrtm7eF57aEMcLOlAmm7Zeddbm7ajrJpb0RSsor3wsb/EyqfEeZt2Z/+OtrToTJAQQQCBYoHCffCll+Prrr62urs70x9ZPfb3nns2bN69dgDV79mzTcj+tsMIKNnfuXP+t+60/do2NjYllbW1t7fJNrAh4ccaHU+3fc+fZkz/YNO0WKmNyOdNu1ImFHy2pt+1fetVuH7uBbdpvxU7s+e2mYcrz01ffsKE9e9rk9dbp9PEy7RBUlj1XHmy7DVnJun0XGGfKI1/rRj/6hB2/xmr2i+FD85Vlxnxa77jN2j5432r+9OcO2/ku+bxuYt7DlmNXXmMxL3ALk/wydWbfbsf/0W2e13p89/8pXZ5VW25lVT/YInQdO1M3f9te191ord7fDP3dICGAAAL5EihagKVv96nfAtWq1dMLApJT6nbaRq0UyUmtYDfccENi0YIFC1yglliwnBdLveBsmZevgrvUpJYztRgsXLgwdVXo9wsbGq01HreFixbZvHjn/qgPHjzYli5davX19Z06flNzszV4H2zp6tipjJI2lk3v3r1tkVePKKQWz7Rp2bK81jFTvXo0LLXq5mW2OM11o+tWXyCiYqPrRteMrp1ipyjaLF2ypFM2uu5JCCCAQCaBog1yHzBggPuD39T0bVeSCqkP/5VXXrldeQcN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AggggAACCORRgAArj5hRy2rlHt3tuQ2+b2rJqvMejLyC91iZLfv2sX+PWdd6eO9JCCCAAAIIINA1AkzT0DWukcm1txdUXbvmapEpDwVBAAEEEECgEgRoxqiEs0wdEUAAAQQQQKCgAgRYBeXmYAgggAACCCBQCQIEWJVwlqkjAggggAACCBRUoOhjsObPn2+vv/66rbvuujZkyJC0lZ8xY4bNmjUrsW7AgAG2+uqrJ97zAgEEEEAAAQQQiJJAUQOsBx54wO655x7beuut3e+11lrLjjzyyA4+1157rX311Ve24oorunXrr78+AVYHJRYggAACCCCAQFQEihZgtXozid9888123nnn2ejRo23//fe3vfbayw488EDr169fO5+pU6faX//6VxsxggcUt4PhDQIIIIAAAghEUqBoAVa1N33AjTfeaHV1dQ6msbHRlixZYgq8ktPSpUtt3rx59s0339izzz5r48ePt2HDhiVvYg0NDa6Fy19YU1Nj+slHqvLmi4rFYqbyRiVFpTzYBF8Rul6icp78Uup8ReE6xsY/I/xGAIFyFihagCVUP7hqa2uziy++2LbffnsbOHBgO+9PPvnEmpqa7NVXX7Xa2lrXhXjwwQfbjjvumNjulVdesUmTJiXe//nPf3atYYkFeXihY0cl9enTx/QTldSrV6+oFMW5YJP+dHDdpHfR0s7a6IsfCQEEEMgkEIt7KdMG+Vr36aef2kMPPeSyW2GFFVxXoN4oeDrjjDNMxfjTn/5k3bt3b3fIlpYWW7x4caLb8Pnnn7frr7/errvuusR2auF67733Eu81WN4fr5VYGPKFvvUruKqvrw+ZQ35369+/v+mPu1r8ip2wCT4DaqXp2bMn100aonKw0d+pKAXyaZhZhAACRRYoWAuWuuz69u3rqtu797cPGlagcPzxx9vQoUPt2GOPTdt9sWDBAlu0aFEiwNI4LA14V6uXPuCVFHRsueWW7rX+0T7qNsxH0jF69Ohhy5Yty0d2eclD3ahRKI9s9EEThbL4sFGxURChaz5KNvqyEoXylINN6hdB//rjNwIIIOALFCzA0ripAw44wD+u+33aaafZmmuuaUcccUS75Xozffp0Gzx4sC1cuNCOPvpou+OOO1yLgFrBttlmm0Rw1WFHFiCAAAIIIIAAAkUWKFiAlVrP999/31566SX3c9dddyVWX3bZ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" width="600" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="session-information" class="section level2">
 <h2>Session Information</h2>
 <p>The version number of R and packages loaded for generating the vignette were:</p>
-<pre><code>#&gt; R version 3.6.1 (2019-07-05)
-#&gt; Platform: x86_64-apple-darwin15.6.0 (64-bit)
+<pre><code>#&gt; R version 4.0.5 (2021-03-31)
+#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)
 #&gt; Running under: macOS Mojave 10.14.5
 #&gt; 
 #&gt; Matrix products: default
-#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
-#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 #&gt; 
 #&gt; locale:
 #&gt; [1] C/zh_CN.UTF-8/zh_CN.UTF-8/C/zh_CN.UTF-8/zh_CN.UTF-8
@@ -523,52 +376,51 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 #&gt; [8] base     
 #&gt; 
 #&gt; other attached packages:
-#&gt; [1] graphite_1.30.0     NFP_0.99.3          graph_1.62.0       
-#&gt; [4] BiocGenerics_0.30.0
+#&gt; [1] graphite_1.36.0     NFP_0.99.4          graph_1.68.0       
+#&gt; [4] BiocGenerics_0.36.0
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
-#&gt;  [1] tidyselect_0.2.5     xfun_0.9             purrr_0.3.2         
-#&gt;  [4] lattice_0.20-38      colorspace_1.4-1     vctrs_0.2.0         
-#&gt;  [7] htmltools_0.3.6      stats4_3.6.1         yaml_2.2.0          
-#&gt; [10] blob_1.2.0           XML_3.98-1.20        rlang_0.4.0         
-#&gt; [13] pillar_1.4.2         glue_1.3.1           DBI_1.0.0           
-#&gt; [16] rappdirs_0.3.1       bit64_0.9-7          lifecycle_0.1.0     
-#&gt; [19] plyr_1.8.4           stringr_1.4.0        munsell_0.5.0       
-#&gt; [22] gtable_0.3.0         memoise_1.1.0.9000   evaluate_0.14       
-#&gt; [25] Biobase_2.44.0       knitr_1.24           IRanges_2.18.2      
-#&gt; [28] AnnotationDbi_1.46.1 Rcpp_1.0.2           scales_1.0.0        
-#&gt; [31] backports_1.1.4      checkmate_1.9.4      formatR_1.7         
-#&gt; [34] S4Vectors_0.22.0     apcluster_1.4.8      bit_1.1-14          
-#&gt; [37] png_0.1-7            ggplot2_3.2.1        digest_0.6.21       
-#&gt; [40] stringi_1.4.3        dplyr_0.8.3          grid_3.6.1          
-#&gt; [43] tools_3.6.1          bitops_1.0-6         magrittr_1.5        
-#&gt; [46] RCurl_1.95-4.12      lazyeval_0.2.2       tibble_2.1.3        
-#&gt; [49] RSQLite_2.1.2        crayon_1.3.4         tidyr_1.0.0         
-#&gt; [52] pkgconfig_2.0.3      zeallot_0.1.0        Matrix_1.2-17       
-#&gt; [55] KEGGgraph_1.44.0     assertthat_0.2.1     rmarkdown_1.15      
-#&gt; [58] httr_1.4.1           R6_2.4.0             igraph_1.2.4.1      
-#&gt; [61] compiler_3.6.1</code></pre>
+#&gt;  [1] tidyselect_1.1.0     xfun_0.20            purrr_0.3.4         
+#&gt;  [4] lattice_0.20-41      colorspace_2.0-0     vctrs_0.3.6         
+#&gt;  [7] generics_0.1.0       htmltools_0.5.0      stats4_4.0.5        
+#&gt; [10] yaml_2.2.1           blob_1.2.1           XML_3.99-0.5        
+#&gt; [13] rlang_0.4.10         pillar_1.4.7         glue_1.4.2          
+#&gt; [16] DBI_1.1.0            rappdirs_0.3.1       bit64_4.0.5         
+#&gt; [19] lifecycle_0.2.0      plyr_1.8.6           stringr_1.4.0       
+#&gt; [22] munsell_0.5.0        gtable_0.3.0         evaluate_0.14       
+#&gt; [25] memoise_1.1.0        Biobase_2.50.0       knitr_1.30          
+#&gt; [28] IRanges_2.24.1       AnnotationDbi_1.52.0 Rcpp_1.0.6          
+#&gt; [31] scales_1.1.1         backports_1.2.1      checkmate_2.0.0     
+#&gt; [34] formatR_1.7          S4Vectors_0.28.1     apcluster_1.4.8     
+#&gt; [37] bit_4.0.4            png_0.1-7            ggplot2_3.3.3       
+#&gt; [40] digest_0.6.27        stringi_1.5.3        dplyr_1.0.2         
+#&gt; [43] grid_4.0.5           tools_4.0.5          bitops_1.0-6        
+#&gt; [46] magrittr_2.0.1       RCurl_1.98-1.2       tibble_3.0.4        
+#&gt; [49] RSQLite_2.2.2        crayon_1.3.4         tidyr_1.1.2         
+#&gt; [52] pkgconfig_2.0.3      ellipsis_0.3.1       Matrix_1.3-2        
+#&gt; [55] KEGGgraph_1.50.0     rmarkdown_2.6        httr_1.4.2          
+#&gt; [58] R6_2.5.0             igraph_1.2.6         compiler_4.0.5</code></pre>
 </div>
 <div id="references" class="section level2 unnumbered">
-<h2>References</h2>
-<div id="refs" class="references">
-<div id="ref-ashburner2000gene">
-<p>Ashburner, Michael, Catherine A Ball, Judith A Blake, David Botstein, Heather Butler, J Michael Cherry, Allan P Davis, et al. 2000. “Gene Ontology: Tool for the Unification of Biology.” <em>Nature Genetics</em> 25 (1). Nature Publishing Group: 25.</p>
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-ashburner2000gene" class="csl-entry">
+Ashburner, Michael, Catherine A Ball, Judith A Blake, David Botstein, Heather Butler, J Michael Cherry, Allan P Davis, et al. 2000. <span>“Gene Ontology: Tool for the Unification of Biology.”</span> <em>Nature Genetics</em> 25 (1): 25.
 </div>
-<div id="ref-cui2015network">
-<p>Cui, Xiuliang, Haochen He, Fuchu He, Shengqi Wang, Fei Li, and Xiaochen Bo. 2015. “Network Fingerprint: A Knowledge-Based Characterization of Biomedical Networks.” <em>Scientific Reports</em> 5. Nature Publishing Group: 13286.</p>
+<div id="ref-cui2015network" class="csl-entry">
+Cui, Xiuliang, Haochen He, Fuchu He, Shengqi Wang, Fei Li, and Xiaochen Bo. 2015. <span>“Network Fingerprint: A Knowledge-Based Characterization of Biomedical Networks.”</span> <em>Scientific Reports</em> 5: 13286.
 </div>
-<div id="ref-frey2007clustering">
-<p>Frey, Brendan J, and Delbert Dueck. 2007. “Clustering by Passing Messages Between Data Points.” <em>Science</em> 315 (5814). American Association for the Advancement of Science: 972–76.</p>
+<div id="ref-frey2007clustering" class="csl-entry">
+Frey, Brendan J, and Delbert Dueck. 2007. <span>“Clustering by Passing Messages Between Data Points.”</span> <em>Science</em> 315 (5814): 972–76.
 </div>
-<div id="ref-kanehisa2007kegg">
-<p>Kanehisa, Minoru, Michihiro Araki, Susumu Goto, Masahiro Hattori, Mika Hirakawa, Masumi Itoh, Toshiaki Katayama, et al. 2007. “KEGG for Linking Genomes to Life and the Environment.” <em>Nucleic Acids Research</em> 36 (suppl_1). Oxford University Press: D480–D484.</p>
+<div id="ref-kanehisa2007kegg" class="csl-entry">
+Kanehisa, Minoru, Michihiro Araki, Susumu Goto, Masahiro Hattori, Mika Hirakawa, Masumi Itoh, Toshiaki Katayama, et al. 2007. <span>“KEGG for Linking Genomes to Life and the Environment.”</span> <em>Nucleic Acids Research</em> 36 (suppl_1): D480–84.
 </div>
-<div id="ref-maslov2002specificity">
-<p>Maslov, Sergei, and Kim Sneppen. 2002. “Specificity and Stability in Topology of Protein Networks.” <em>Science</em> 296 (5569). American Association for the Advancement of Science: 910–13.</p>
+<div id="ref-maslov2002specificity" class="csl-entry">
+Maslov, Sergei, and Kim Sneppen. 2002. <span>“Specificity and Stability in Topology of Protein Networks.”</span> <em>Science</em> 296 (5569): 910–13.
 </div>
-<div id="ref-sales2012g">
-<p>Sales, Gabriele, Enrica Calura, Duccio Cavalieri, and Chiara Romualdi. 2012. “G Raphite-a Bioconductor Package to Convert Pathway Topology to Gene Network.” <em>BMC Bioinformatics</em> 13 (1). BioMed Central: 20.</p>
+<div id="ref-sales2012g" class="csl-entry">
+Sales, Gabriele, Enrica Calura, Duccio Cavalieri, and Chiara Romualdi. 2012. <span>“G Raphite-a Bioconductor Package to Convert Pathway Topology to Gene Network.”</span> <em>BMC Bioinformatics</em> 13 (1): 20.
 </div>
 </div>
 </div>
